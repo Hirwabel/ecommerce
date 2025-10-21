@@ -36,7 +36,7 @@ export default async function Home() {
 
       </section>
       <section className="py-8">
-        <Carousel />
+        <Carousel products={products.data}/>
       </section>
       
     </div>
