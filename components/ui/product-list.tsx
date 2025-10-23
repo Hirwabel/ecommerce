@@ -6,7 +6,12 @@ interface Props {
 }
 
 export const ProductList = ({ products }: Props) => {
-    const [seachTerm, setSearchterm] = useState();
+    const [seachTerm, setSearchterm] = useState<string>("");
+
+    const filteredProduct = products.filter((product) => {
+        const term = setSearchterm 
+    })
+
     return (
       <div>
         <div className="mb-6 flex justify-center">
