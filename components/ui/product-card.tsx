@@ -12,7 +12,7 @@ interface Props {
 export const ProductCard = ({ product }: Props) => {
   const price = product.default_price as Stripe.Price;
     return (
-      <Link href={"/products/1"}>
+      <Link href={`/products/${product.id}`}>
         <Card className="group hover:shadow-2xl transition duration-300 py-0 h-full flex flex-col border-gray-300 gap-0">
           {product.images && product.images[0] && (
               <div className="relative h-80 w-full bg-gray-100 flex items-center justify-center">
