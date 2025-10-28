@@ -1,3 +1,5 @@
+
+
 import { create } from "zustand"; 
 import { persist } from "zustand/middleware";
 
@@ -29,7 +31,7 @@ export const useCartStore = create<CartStore>()(
                         }
                     } 
                     
-                    return {item: [...state.items, item]}
+                    return {items: [...state.items, item]}
 })   
 
 }), {name: "cart"})
