@@ -27,14 +27,13 @@ export default function CheckoutPage() {
   }
 
   const validatePhoneNumber = (phone: string): boolean => {
-    // Phone is 9-digit string without +250
     if (paymentMethod === "mtn") {
       return /^(78|79)\d{7}$/.test(phone);
     }
     if (paymentMethod === "airtel") {
       return /^(72|73)\d{7}$/.test(phone);
     }
-    return true; // Card does not require validation
+    return true;
   };
 
   const getPhonePrefix = () => {
@@ -46,6 +45,7 @@ export default function CheckoutPage() {
   const handleCheckout = async () => {
     setError("");
 
+    // Validate mobile money phone number
     if (paymentMethod === "mtn" || paymentMethod === "airtel") {
       if (!phoneNumber) {
         setError("Please enter your mobile money phone number");
@@ -70,8 +70,18 @@ export default function CheckoutPage() {
         formData.append("phoneNumber", formattedPhone);
       }
 
+      // Call the server action - it handles redirects
       await checkoutAction(formData);
+      
     } catch (err: any) {
+      // NEXT_REDIRECT is not an error - it's the expected behavior for redirects
+      if (err.message && err.message.includes('NEXT_REDIRECT')) {
+        console.log("✅ Redirecting to payment page...");
+        // Don't set loading to false or show error - redirect is happening
+        return;
+      }
+      
+      // Only show actual errors
       console.error("Checkout error:", err);
       setError(err.message || "Checkout failed. Please try again.");
       setLoading(false);
@@ -200,7 +210,7 @@ export default function CheckoutPage() {
           <CardContent className="pt-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-gray-700">
-                You will be redirected to a secure payment page to enter your card details (Visa, Mastercard, or AmEx).
+                ✅ You will be redirected to a secure Pesapal payment page to enter your card details (Visa, Mastercard, or AmEx).
               </p>
             </div>
           </CardContent>
@@ -221,8 +231,13 @@ export default function CheckoutPage() {
           className="w-full text-lg py-6 font-semibold"
           disabled={loading}
         >
-          {loading ? <span className="flex items-center justify-center gap-2"><span className="animate-spin">⏳</span> Processing Payment...</span>
-          : `Proceed - ${(total / 100).toFixed(0)} RWF`}
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="animate-spin">⏳</span> Processing Payment...
+            </span>
+          ) : (
+            `Proceed - ${(total / 100).toFixed(0)} RWF`
+          )}
         </Button>
       </div>
     </div>
