@@ -103,7 +103,7 @@ export default function CheckoutPage() {
               <li key={item.id} className="flex flex-col gap-2 border-b pb-2">
                 <div className="flex justify-between">
                   <span className="font-medium">{item.name}</span>
-                  <span className="font-semibold">{((item.price * item.quantity) / 100).toFixed(0)} RWF</span>
+                  <span className="font-semibold">{((item.price * item.quantity)).toFixed(0)} RWF</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" onClick={() => removeItem(item.id)} disabled={loading}>–</Button>
@@ -113,7 +113,7 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 border-t pt-2 text-xl font-bold text-center">Total: {(total / 100).toFixed(0)} RWF</div>
+          <div className="mt-4 border-t pt-2 text-xl font-bold text-center">Total: {(total ).toFixed(0)} RWF</div>
         </CardContent>
       </Card>
 
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
               <span className="animate-spin">⏳</span> Processing Payment...
             </span>
           ) : (
-            `Proceed - ${(total / 100).toFixed(0)} RWF`
+            `Proceed - ${(total).toFixed(0)} RWF`
           )}
         </Button>
       </div>

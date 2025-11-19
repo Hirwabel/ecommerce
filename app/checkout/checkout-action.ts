@@ -3,7 +3,7 @@
 import { CartItem } from "@/store/cart-store";
 import { redirect } from "next/navigation";
 import { getAccessToken, createOrder } from "@/lib/pesapal";
-import { requestToPay } from "@/lib/momo";
+//import { requestToPay } from "@/lib/momo";
 
 export const checkoutAction = async (formData: FormData): Promise<void> => {
   try {
@@ -24,8 +24,8 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
     console.log("💰 Total:", total);
     console.log("💳 Payment method:", paymentMethod);
 
-    // MTN Mobile Money
-    if (paymentMethod === "mtn") {
+    // MTN Mobile Money 
+   /**  if (paymentMethod === "mtn") {
       if (!phoneNumber) {
         throw new Error("Phone number is required for MTN Mobile Money");
       }
@@ -40,11 +40,11 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
       redirect(`/payment-status?ref=${referenceId}&method=mtn`);
     }
 
-    // Airtel Money
+
     if (paymentMethod === "airtel") {
       throw new Error("Airtel Money is not yet implemented");
     }
-
+**/
     // Card Payment (via Pesapal)
     if (paymentMethod === "card") {
       if (!process.env.NEXT_PUBLIC_BASE_URL) {
